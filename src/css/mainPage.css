@@ -1,0 +1,31 @@
+*:root {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 62.5%;
+    color: blueviolet;
+    overflow-x: hidden;
+}
+
+.main-container {
+    background-color: #282c34;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.project-name {
+    font-size: 6rem;
+    text-align: center;
+    padding-top: 2rem;
+    transition: .5s ease-out;
+}
+
+.project-name:hover {
+    transform: scale(1.05);
+}
+
+.panel {
+    padding-top: 5rem;
+    align-self: center;
+}
