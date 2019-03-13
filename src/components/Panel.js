@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import '../css/panel.css';
+import Grid from '@material-ui/core/Grid';
+//import Input from './Input';
+import DataTable from './DataTable';
 
 class Panel extends Component {
     constructor() {
@@ -17,7 +20,7 @@ class Panel extends Component {
             .then(blob => blob.json())
             .then(data => {
                 this.setState({
-                    fetchedData: data,
+                    fetchedData: data.items,
                     isLoading: false
                 })
             })
@@ -27,12 +30,17 @@ class Panel extends Component {
         const { name, value } = e.target
         this.setState({
             [name]: value
+        }, function() {
+            console.log(this.state.searchInput)
         })
     }
 
     render() {
         return (
-            <input className="panel__input" type="text" placeholder="Enter repozitory name . . ." value={this.state.searchInput} onChange={this.handleChange} name="searchInput" />
+            <Grid container direction="column" alignItems="center" justifyContent="Center">
+                <Grid item><input className="panel__input" type="text" placeholder="Enter repozitory name . . ." value={this.state.searchInput} onChange={this.handleChange} name="searchInput" /></Grid>
+                <Grid item><DataTable data={this.state.fetchedData}/></Grid>
+            </Grid>
         )
     }
 }
