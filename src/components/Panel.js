@@ -6,15 +6,21 @@ class Panel extends Component {
         super();
         this.state = {
             searchInput: "",
-            fetchedData: []
+            fetchedData: [],
+            isLoading: true
         }
         this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
-        fetch('https://api.github.com/search/repositories?q=tetris', /*{headers: { 'X-RateLimit-Limit': 20}}*/)
+        fetch('https://api.github.com/search/repositories?q=tetris')
             .then(blob => blob.json())
-            .then(data => console.log(data))
+            .then(data => {
+                this.setState({
+                    fetchedData: data,
+                    isLoading: false
+                })
+            })
     }
 
     handleChange(e) {
