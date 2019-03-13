@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import '../css/panel.css';
 
 class Panel extends Component {
@@ -10,6 +9,12 @@ class Panel extends Component {
             fetchedData: []
         }
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('https://api.github.com/search/repositories?q=tetris', /*{headers: { 'X-RateLimit-Limit': 20}}*/)
+            .then(blob => blob.json())
+            .then(data => console.log(data))
     }
 
     handleChange(e) {
