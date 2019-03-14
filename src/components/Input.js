@@ -1,8 +1,27 @@
 import React from 'react';
+import injectSheet from 'react-jss';
 
-function Input() {
+const styles = {
+    input: {
+        borderRadius: '.5rem',
+        height: '3rem',
+        width: '25rem',
+        paddingLeft: '1rem',
+        border: '.3rem blueviolet solid',
+        backgroundColor: '#282c34',
+        color: 'blueviolet'
+    }
+}
+
+const input = ({classes, ...props}) => (
+    <input type="text" className={classes.input} type="text" placeholder="Enter repozitory name . . ." name="searchInput" {...props}/>
+)
+
+const StyledInput = injectSheet(styles)(input);
+
+function Input(props) {
     return (
-        <input type="text" className="panel__input" type="text" placeholder="Enter repozitory name . . ." />
+        <StyledInput onChange={props.handleChange} value={props.value}/>
     )
 }
 
