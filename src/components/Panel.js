@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Input from './Input';
 import DataTable from './DataTable';
+import debounce from '../utils/debounce';
 
 class Panel extends Component {
     constructor() {
@@ -9,7 +10,7 @@ class Panel extends Component {
         this.state = {
             searchInput: "",
             fetchedData: [],
-            isLoading: true
+            isLoading: true,
         }
         this.handleChange = this.handleChange.bind(this);
     }
@@ -20,10 +21,7 @@ class Panel extends Component {
             .then(data => {
                 this.setState({
                     fetchedData: data.items,
-                }, function () {
-                    this.setState({
-                        isLoading: false
-                    })
+                    isLoading: false
                 })
             })
     }
@@ -33,15 +31,22 @@ class Panel extends Component {
         this.setState({
             [name]: value
         }, function() {
-            console.log(this.state.searchInput)
+            fetch(`https://api.github.com/search/repositories?q=${this.state.searchInput}`)
+            .then(blob => blob.json())
+            .then(data => {
+                this.setState({
+                    fetchedData: data.items,
+                    isLoading: false
+                })
+            })
         })
     }
 
     render() {
         return (
-            <Grid container direction="column" alignItems="center" justify="center">
+            <Grid container direction="column" alignItems="center">
                 <Grid item><Input handleChange={this.handleChange} value={this.state.searchInput}/></Grid>
-                <Grid item><DataTable data={this.state.fetchedData} isLoading={this.state.isLoading}/></Grid>
+                <Grid item style={{marginTop: '2rem'}}><DataTable data={this.state.fetchedData} isLoading={this.state.isLoading}/></Grid>
             </Grid>
         )
     }
