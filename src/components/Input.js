@@ -21,7 +21,7 @@ const StyledInput = injectSheet(styles)(input);
 
 function Input(props) {
     return (
-        <StyledInput onChange={props.handleChange} value={props.value}/>
+        <StyledInput onChange={props.handleChangeInput} value={props.value}/>
     )
 }
 

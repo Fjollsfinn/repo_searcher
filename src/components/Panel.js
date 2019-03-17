@@ -12,19 +12,20 @@ class Panel extends Component {
             fetchedData: [],
             isLoading: true,
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.getData = debounce(this.getData, 700)
+        this.handleChangeInput = this.handleChangeInput.bind(this);
+        this.getData = debounce(this.getData, 500)
     }
 
     componentDidMount() {
             this.getData('tetris');
     }
 
-    handleChange(e) {
+    handleChangeInput(e) {
         e.persist();
         const { name, value } = e.target
         this.setState({
-            [name]: value
+            [name]: value,
+            isLoading: true
         }, function() {
             if(this.state.searchInput) {
                 this.getData(this.state.searchInput);
@@ -61,7 +62,7 @@ class Panel extends Component {
     render() {
         return (
             <Grid container direction="column" alignItems="center">
-                <Grid item><Input handleChange={this.handleChange} value={this.state.searchInput}/></Grid>
+                <Grid item><Input handleChangeInput={this.handleChangeInput} value={this.state.searchInput}/></Grid>
                 <Grid item style={{marginTop: '2rem'}}><DataTable data={this.state.fetchedData} isLoading={this.state.isLoading}/></Grid>
             </Grid>
         )
@@ -69,18 +70,3 @@ class Panel extends Component {
 }
 
 export default Panel;
-
-/*
-        const cachedData = JSON.parse(localStorage.getItem('cachedData'));
-        const cachedQuery = JSON.parse(localStorage.getItem('cachedQuery'));
-        if (cachedData && cachedQuery && cachedQuery !== topic) {
-            console.log("Data was loaded from localStorage.");
-          this.setState({ 
-              fetchedData: cachedData,
-              searchInput: cachedQuery,
-              isLoading: false
-            });
-          return;
-        }
-        console.log("Data was fetched.")
-        */
