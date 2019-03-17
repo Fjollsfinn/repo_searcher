@@ -37,7 +37,6 @@ class Panel extends Component {
         const cachedQuery = JSON.parse(localStorage.getItem('cachedQuery'));
         const cachedData = JSON.parse(localStorage.getItem('cachedData'));
         if (cachedData && cachedQuery && topic !== cachedQuery && topic==='tetris') {
-            console.log("Data was loaded from localStorage.");
           this.setState({ 
               fetchedData: cachedData,
               searchInput: cachedQuery,
@@ -45,7 +44,6 @@ class Panel extends Component {
             });
           return;
         }
-        console.log("Data was fetched.")
         fetch(`https://api.github.com/search/repositories?q=${topic}`)
             .then(blob => blob.json())
             .then(data => {

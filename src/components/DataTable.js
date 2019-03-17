@@ -20,12 +20,13 @@ const styles = {
         color: 'white',
         fontSize: '1.6rem',
         width: '10rem'
+    },
+    tablePagination: {
+        color: 'white'
     }
 }
 
-const Cell = ({classes, children}) => (
-    <TableCell className={classes.tableCell}>{children}</TableCell>
-)
+const Cell = ({classes, children}) => <TableCell className={classes.tableCell}>{children}</TableCell>
 const StyledTableCell = injectSheet(styles)(Cell)
 
 class TablePaginationActions extends React.Component {
@@ -52,7 +53,7 @@ class TablePaginationActions extends React.Component {
       const { count, page, rowsPerPage } = this.props;
   
       return (
-        <Grid container style={{width: '10rem'}}>
+        <Grid container style={{width: '34rem'}}>
           <Grid item><IconButton
             onClick={this.handleFirstPageButtonClick}
             disabled={page === 0}
@@ -160,6 +161,5 @@ class DataTable extends Component {
     
     }
 }
-
 
 export default DataTable;
