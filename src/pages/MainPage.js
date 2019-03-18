@@ -5,10 +5,11 @@ import '../css/mainPage.css';
 import Panel from '../components/Panel';
 import Header from '../components/Header';
 
+
 class MainPage extends Component {
     render() {
         return (
-            <div className="main-container">
+            <div>
                 <Header />
                 <Panel />
             </div>
