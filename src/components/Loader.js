@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 
 const styles = {
     loader: {
-        color: 'blueviolet'
+        color: 'white'
     }
 }
 

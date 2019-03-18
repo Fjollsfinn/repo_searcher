@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import injectSheet from 'react-jss';
 import '../css/mainPage.css';
 
 import Panel from '../components/Panel';
+import Header from '../components/Header';
 
 class MainPage extends Component {
     render() {
         return (
             <div className="main-container">
-                <div className="project-name">Github Repozitory Searcher</div>
-                <div className="panel">
-                    <Panel />
-                </div>
+                <Header />
+                <Panel />
             </div>
         )
     }

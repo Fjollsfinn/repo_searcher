@@ -7,21 +7,21 @@ const styles = {
         height: '3rem',
         width: '25rem',
         paddingLeft: '1rem',
-        border: '.3rem blueviolet solid',
+        border: '.3rem white solid',
         backgroundColor: '#282c34',
-        color: 'blueviolet'
+        color: 'white'
     }
 }
 
-const input = ({classes, ...props}) => (
+const inputComponent = ({classes, ...props}) => (
     <input type="text" className={classes.input} type="text" placeholder="Enter repozitory name . . ." name="searchInput" {...props}/>
 )
 
-const StyledInput = injectSheet(styles)(input);
+const StyledInputComponent = injectSheet(styles)(inputComponent);
 
 function Input(props) {
     return (
-        <StyledInput onChange={props.handleChangeInput} value={props.value}/>
+        <StyledInputComponent onChange={props.handleChangeInput} value={props.value}/>
     )
 }
 

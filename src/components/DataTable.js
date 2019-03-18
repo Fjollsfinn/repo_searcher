@@ -15,6 +15,8 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
+import '../css/mainPage.css';
+
 const styles = {
     tableCell: {
         color: 'white',
@@ -22,12 +24,16 @@ const styles = {
         width: '10rem'
     },
     tablePagination: {
-        color: 'white'
+        color: 'white',
+        fontSize: '1.3rem'
     }
 }
 
 const Cell = ({classes, children}) => <TableCell className={classes.tableCell}>{children}</TableCell>
 const StyledTableCell = injectSheet(styles)(Cell)
+
+const Pagination = ({classes, ...props}) => <TablePagination className={classes.tablePagination} {...props}/>
+const StyledPagination = injectSheet(styles)(Pagination)
 
 class TablePaginationActions extends React.Component {
     handleFirstPageButtonClick = event => {
@@ -53,34 +59,34 @@ class TablePaginationActions extends React.Component {
       const { count, page, rowsPerPage } = this.props;
   
       return (
-        <Grid container style={{width: '34rem'}}>
+        <Grid container style={{width: '35rem'}}>
           <Grid item><IconButton
             onClick={this.handleFirstPageButtonClick}
             disabled={page === 0}
             aria-label="First Page"
           >
-            <FirstPageIcon />
+            <FirstPageIcon style={{color: 'white'}} />
           </IconButton></Grid>
           <Grid item><IconButton
             onClick={this.handleBackButtonClick}
             disabled={page === 0}
             aria-label="Previous Page"
           >
-            <KeyboardArrowLeft />
+            <KeyboardArrowLeft style={{color: 'white'}} />
           </IconButton></Grid>
           <Grid item><IconButton
             onClick={this.handleNextButtonClick}
             disabled={page >= Math.ceil(count / rowsPerPage) - 1}
             aria-label="Next Page"
           >
-            <KeyboardArrowRight />
+            <KeyboardArrowRight style={{color: 'white'}} />
           </IconButton></Grid>
           <Grid item><IconButton
             onClick={this.handleLastPageButtonClick}
             disabled={page >= Math.ceil(count / rowsPerPage) - 1}
             aria-label="Last Page"
           >
-            <LastPageIcon />
+            <LastPageIcon style={{color: 'white'}} />
           </IconButton></Grid>
         </Grid>
       );
@@ -140,7 +146,7 @@ class DataTable extends Component {
                     </TableBody>
                     <TableFooter>
                         <TableRow>
-                            <TablePagination
+                            <StyledPagination
                             rowsPerPageOptions={[5, 10, 30]}
                             count={30}
                             rowsPerPage={this.state.rowsPerPage}
