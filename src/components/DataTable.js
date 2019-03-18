@@ -15,8 +15,6 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
-import '../css/mainPage.css';
-
 const styles = {
     tableCell: {
         color: 'white',
