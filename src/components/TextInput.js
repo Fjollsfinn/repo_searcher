@@ -14,15 +14,15 @@ const styles = {
 }
 
 const inputComponent = ({classes, ...props}) => (
-    <input type="text" className={classes.input} type="text" placeholder="Enter repozitory name . . ." name="searchInput" {...props}/>
+    <input type="text" className={classes.input} placeholder="Enter repozitory name . . ." name="searchInput" {...props}/>
 )
 
 const StyledInputComponent = injectSheet(styles)(inputComponent);
 
-function Input(props) {
+function TextInput(props) {
     return (
         <StyledInputComponent onChange={props.handleChangeInput} value={props.value}/>
     )
 }
 
-export default Input;
+export default TextInput;

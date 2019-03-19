@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-import Input from './Input';
+import TextInput from './TextInput';
 import DataTable from './DataTable';
 import debounce from 'lodash.debounce';
 
@@ -60,7 +60,7 @@ class Panel extends Component {
     render() {
         return (
             <Grid container direction="column" alignItems="center">
-                <Grid item><Input handleChangeInput={this.handleChangeInput} value={this.state.searchInput}/></Grid>
+                <Grid item><TextInput handleChangeInput={this.handleChangeInput} value={this.state.searchInput}/></Grid>
                 <Grid item style={{marginTop: '2rem'}}><DataTable data={this.state.fetchedData} isLoading={this.state.isLoading}/></Grid>
             </Grid>
         )
