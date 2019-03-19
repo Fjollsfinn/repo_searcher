@@ -14,7 +14,7 @@ const styles = {
     tableCell: {
         color: 'white',
         fontSize: '1.6rem',
-        width: '10rem'
+        width: '12rem'
     }
 }
 
