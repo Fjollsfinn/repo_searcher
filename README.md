@@ -1,5 +1,5 @@
 ## INFO
-It's an application for searching github repositories. The project has been made only for the purpose of learning a react.
+It's an application for searching github repositories. The project has been made only for the purpose of learning react.
 
 `specification`: https://hackmd.io/s/r1lLqA8S4
 
