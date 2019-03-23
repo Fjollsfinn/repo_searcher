@@ -21,10 +21,12 @@ const styles = {
         width: '13rem'
     },
     arrowUp: {
-        color: 'white'
+        color: 'white',
+        zIndex: -1
     },
     arrowDown: {
-        color: 'white'
+        color: 'white',
+        zIndex: -1
     }
 }
 
@@ -48,15 +50,6 @@ class DataTable extends Component {
             owner: 'asc',
             stars: 'asc',
             creationDate: 'asc'
-            /*
-            headers: {
-                id: {name: 'ID', sorted: 'asc'},
-                repoTitle: {name: 'Repo Title', sorted: 'asc'},
-                owner: {name: 'Owner', sorted: 'asc'},
-                stars: {name: 'Stars', sorted: 'asc'},
-                creationDate: {name: 'Created at', sorted: 'asc'}
-            }
-            */
         }
         this.handleChangePage = this.handleChangePage.bind(this);
         this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
@@ -72,19 +65,18 @@ class DataTable extends Component {
     };
 
     handleSort(e) {
-        console.log(e.target.dataset.sort);
-        const columnHeader = 'desc';
-        
+        let name, order;
+        name = e.target.dataset.sort
+        name === 'id' || name === 'repoTitle' || name === 'owner' || name === 'stars' || name === 'creationDate' ? name = name: name = e.target.parentNode.dataset.sort; 
+        this.state[name] === 'asc' ? order = 'desc' : order = 'asc';
         this.setState({
-            ID: columnHeader
+            [name]: order
         })
-        
-        
     }
     
       render() {
         const {page, rowsPerPage} = this.state;
-        const columnHeaders = ['ID', 'Repo Title', 'Owner', 'Stars', 'Created at']
+        const columnHeaders = [{title: 'ID', name: 'id'}, {title:'Repo Title', name: 'repoTitle'}, {title: 'Owner', name: 'owner'}, {title: 'Stars', name: 'stars'}, {title: 'Created at', name: 'creationDate'}]
         const data = this.props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => (
             <TableRow key={item.id}>
                 <StyledTableCell>{item.id}</StyledTableCell>
@@ -103,7 +95,7 @@ class DataTable extends Component {
                         <TableHead>
                             <TableRow>
                                 {columnHeaders.map(header => (
-                                    <StyledTableCell key={header}>{header}{this.state[header] === 'asc' ? <IconButton onClick={this.handleSort} data-sort={header}><WhiteArrowUp /></IconButton> : <IconButton onClick={this.handleSort}><WhiteArrowDown /></IconButton>}</StyledTableCell>
+                                    <StyledTableCell key={header.name}>{header.title}<IconButton onClick={this.handleSort} data-sort={header.name}>{this.state[header.name] === 'asc' ? <WhiteArrowUp /> : <WhiteArrowDown />}</IconButton></StyledTableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
@@ -126,5 +118,3 @@ class DataTable extends Component {
 }
 
 export default DataTable;
-
-/*{Object.keys(this.state.headers).map(headerObj => <StyledTableCell key={this.state.headers[headerObj]['name']}>{this.state.headers[headerObj]['name']}{this.state.headers[headerObj]['sorted'] === 'asc' ? <IconButton onClick={this.handleSort} data-sort={headerObj}><WhiteArrowUp data-sort={headerObj} /></IconButton> : <IconButton onClick={this.handleSort}><WhiteArrowDown /></IconButton>}</StyledTableCell>)}*/
