@@ -11,9 +11,15 @@ class Panel extends Component {
             searchInput: "",
             fetchedData: [],
             isLoading: true,
+            id: 'asc',
+            name: 'asc',
+            owner: 'asc',
+            stargazers_count: 'asc',
+            created_at: 'asc'
         }
         this.handleChangeInput = this.handleChangeInput.bind(this);
         this.getData = debounce(this.getData, 500)
+        this.handleSort = this.handleSort.bind(this);
     }
 
     componentDidMount() {
@@ -57,11 +63,75 @@ class Panel extends Component {
             })
     }
 
+    handleSort(e) {
+        let sortingParam, order, sortedData;
+        sortingParam = e.target.dataset.sort
+        sortingParam === 'id' || sortingParam === 'name' || sortingParam === 'owner' || sortingParam === 'stargazers_count' || sortingParam === 'created_at' ? sortingParam = sortingParam : sortingParam = e.target.parentNode.dataset.sort; 
+        this.state[sortingParam] === 'asc' ? order = 'desc' : order = 'asc';
+
+        function compare(item1, item2) {
+            if(order === 'asc') {
+                if (sortingParam === 'name') {
+                    if (item1[sortingParam] > item2[sortingParam]) {
+                        return -1
+                    } else if (item1[sortingParam] < item2[sortingParam]) {
+                        return 1
+                    }
+                } else if (sortingParam === 'owner') {
+                    if (item1[sortingParam]['login'] > item2[sortingParam]['login']) {
+                        return -1
+                    } else if (item1[sortingParam]['login'] < item2[sortingParam]['login']) {
+                        return 1
+                    }
+                } else if (sortingParam === 'created_at') {
+                    return item1[sortingParam].slice(0,10).split('-').join('') -  item2[sortingParam].slice(0,10).split('-').join('')
+                }
+                return item1[sortingParam] - item2[sortingParam];
+            } else {
+                if (sortingParam === 'name') {
+                    if (item1[sortingParam] < item2[sortingParam]) {
+                        return -1
+                    } else if (item1[sortingParam] > item2[sortingParam]) {
+                        return 1
+                    }
+                } else if (sortingParam === 'owner') {
+                    if (item1[sortingParam]['login'] < item2[sortingParam]['login']) {
+                        return -1
+                    } else if (item1[sortingParam]['login'] > item2[sortingParam]['login']) {
+                        return 1
+                    }
+                } else if (sortingParam === 'created_at') {
+                    return item2[sortingParam].slice(0,10).split('-').join('') - item1[sortingParam].slice(0,10).split('-').join('')
+                }
+                return item2[sortingParam] - item1[sortingParam];
+            }
+        }
+        
+        sortedData = this.state.fetchedData.sort(compare)
+
+        this.setState({
+            [sortingParam]: order,
+            fetchedData: sortedData
+        })
+    }
+
     render() {
         return (
             <Grid container direction="column" alignItems="center">
-                <Grid item><TextInput handleChangeInput={this.handleChangeInput} value={this.state.searchInput}/></Grid>
-                <Grid item style={{marginTop: '2rem'}}><DataTable data={this.state.fetchedData} isLoading={this.state.isLoading}/></Grid>
+                <Grid item>
+                    <TextInput 
+                        handleChangeInput={this.handleChangeInput} 
+                        value={this.state.searchInput}
+                    />
+                </Grid>
+                <Grid item style={{marginTop: '2rem'}}>
+                    <DataTable 
+                        data={this.state.fetchedData} 
+                        isLoading={this.state.isLoading} 
+                        handleSort={this.handleSort} 
+                        state={this.state}
+                    />
+                </Grid>
             </Grid>
         )
     }

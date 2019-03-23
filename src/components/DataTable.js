@@ -44,16 +44,10 @@ class DataTable extends Component {
         super();
         this.state = {
             page: 0,
-            rowsPerPage: 5, 
-            id: 'asc',
-            repoTitle: 'asc',
-            owner: 'asc',
-            stars: 'asc',
-            creationDate: 'asc'
+            rowsPerPage: 5
         }
         this.handleChangePage = this.handleChangePage.bind(this);
         this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
-        this.handleSort = this.handleSort.bind(this);
     }
 
     handleChangePage(event, page) {
@@ -63,20 +57,10 @@ class DataTable extends Component {
     handleChangeRowsPerPage(event) {
         this.setState({ page: 0, rowsPerPage: +event.target.value });
     };
-
-    handleSort(e) {
-        let name, order;
-        name = e.target.dataset.sort
-        name === 'id' || name === 'repoTitle' || name === 'owner' || name === 'stars' || name === 'creationDate' ? name = name: name = e.target.parentNode.dataset.sort; 
-        this.state[name] === 'asc' ? order = 'desc' : order = 'asc';
-        this.setState({
-            [name]: order
-        })
-    }
     
       render() {
         const {page, rowsPerPage} = this.state;
-        const columnHeaders = [{title: 'ID', name: 'id'}, {title:'Repo Title', name: 'repoTitle'}, {title: 'Owner', name: 'owner'}, {title: 'Stars', name: 'stars'}, {title: 'Created at', name: 'creationDate'}]
+        const columnHeaders = [{title: 'ID', name: 'id'}, {title:'Repo Title', name: 'name'}, {title: 'Owner', name: 'owner'}, {title: 'Stars', name: 'stargazers_count'}, {title: 'Created at', name: 'created_at'}]
         const data = this.props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => (
             <TableRow key={item.id}>
                 <StyledTableCell>{item.id}</StyledTableCell>
@@ -95,7 +79,7 @@ class DataTable extends Component {
                         <TableHead>
                             <TableRow>
                                 {columnHeaders.map(header => (
-                                    <StyledTableCell key={header.name}>{header.title}<IconButton onClick={this.handleSort} data-sort={header.name}>{this.state[header.name] === 'asc' ? <WhiteArrowUp /> : <WhiteArrowDown />}</IconButton></StyledTableCell>
+                                    <StyledTableCell key={header.name}>{header.title}<IconButton onClick={this.props.handleSort} data-sort={header.name}>{this.props.state[header.name] === 'asc' ? <WhiteArrowUp /> : <WhiteArrowDown />}</IconButton></StyledTableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
