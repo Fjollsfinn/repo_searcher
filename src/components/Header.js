@@ -6,16 +6,16 @@ const styles = {
         fontSize: '6rem',
         paddingTop: '3rem',
         paddingBottom: '6rem',
-        transition: '.5s ease-out',
+        transition: '.3s ease-out',
         color: 'white',
         textAlign: 'center',
+        cursor: 'pointer',
         '&:hover': {
-            transform: 'scale(1.05)' 
+            transform: 'skewY(3deg) skewX(15deg) scale(1.1)',
         }
     }
 }
-
-const HeaderComponent = ({classes, children}) => (<div className={classes.header}>{children}</div>)
+const HeaderComponent = ({classes, children}) => (<div className={classes.header}><a style={{textDecoration: 'none', color: 'inherit'}}href='https://github.com' target='_blank'>{children}</a></div>)
 const StyledHeaderComponent = injectSheet(styles)(HeaderComponent)
 
 function Header() {
