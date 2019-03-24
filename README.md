@@ -1,7 +1,7 @@
 ## INFO
 It's an application for searching github repositories. The project has been made only for the purpose of learning react.
 
-# LIVE
+## LIVE
 https://fjollsfinn.github.io/repo_searcher/ <br />
 `You can also run it in development mode. Info at the and of this page.`
 
