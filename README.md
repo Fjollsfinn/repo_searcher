@@ -1,6 +1,10 @@
 ## INFO
 It's an application for searching github repositories. The project has been made only for the purpose of learning react.
 
+# LIVE
+https://fjollsfinn.github.io/repo_searcher/ <br />
+`You can also run it in development mode. Info at the and of this page.`
+
 ## task assumptions:
 Develop an application displaying dynamic tabular data using React and fetching data using Github public api.
 
@@ -28,4 +32,14 @@ Feel free to use your favorite UI components library if you like.
 
 `specification`: https://hackmd.io/s/r1lLqA8S4
 
+## Running in development mode mode
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br>
