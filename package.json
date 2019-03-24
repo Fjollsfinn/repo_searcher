@@ -27,5 +27,8 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "http://fjollsfinn.github.io/repo_searcher"
+  "homepage": "http://fjollsfinn.github.io/repo_searcher",
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  }
 }
