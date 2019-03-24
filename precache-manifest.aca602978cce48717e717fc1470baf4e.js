@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/repo_searcher/static/css/main.fa820814.chunk.css"
   },
   {
-    "revision": "3e2f141dc244fb0d826cc73da5c493b3",
+    "revision": "8811da0a99716aba469122b0b0add78c",
     "url": "/repo_searcher/index.html"
   }
 ];
