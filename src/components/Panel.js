@@ -4,6 +4,8 @@ import TextInput from './TextInput';
 import DataTable from './DataTable';
 import debounce from 'lodash.debounce';
 
+import Popup from './Popup';
+
 class Panel extends Component {
     constructor() {
         super();
@@ -15,11 +17,14 @@ class Panel extends Component {
             name: 'asc',
             owner: 'asc',
             stargazers_count: 'asc',
-            created_at: 'asc'
+            created_at: 'asc',
+            isPopupOpen: false,
+            selectedItem: null
         }
         this.handleChangeInput = this.handleChangeInput.bind(this);
         this.getData = debounce(this.getData, 500)
         this.handleSort = this.handleSort.bind(this);
+        this.triggerPopup = this.triggerPopup.bind(this);
     }
 
     componentDidMount() {
@@ -115,6 +120,17 @@ class Panel extends Component {
         })
     }
 
+    triggerPopup(e) {
+        const clickedItemIndex = e.target.parentNode.dataset.index
+        console.log(this.state.fetchedData[clickedItemIndex])
+        this.setState(prevState => {
+            return {
+                isPopupOpen: !prevState.isPopupOpen,
+                selectedItem: clickedItemIndex
+            }
+        })
+    }
+
     render() {
         return (
             <Grid container direction="column" alignItems="center">
@@ -129,9 +145,11 @@ class Panel extends Component {
                         data={this.state.fetchedData} 
                         isLoading={this.state.isLoading} 
                         handleSort={this.handleSort} 
+                        triggerPopup={this.triggerPopup}
                         state={this.state}
                     />
                 </Grid>
+                {this.state.isPopupOpen && <Popup triggerPopup={this.triggerPopup} selectedItem={this.state.selectedItem} data={this.state.fetchedData} />}
             </Grid>
         )
     }

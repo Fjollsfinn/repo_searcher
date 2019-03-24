@@ -18,7 +18,7 @@ const styles = {
     tableCell: {
         color: 'white',
         fontSize: '1.6rem',
-        width: '13rem'
+        width: '13rem',
     },
     arrowUp: {
         color: 'white',
@@ -27,6 +27,12 @@ const styles = {
     arrowDown: {
         color: 'white',
         zIndex: -1
+    },
+    activeRow: {
+        cursor: 'pointer',
+        '&:hover': {
+            backgroundColor: '#434956',
+        }
     },
     '@media (max-width: 1024px)': {
         tableCell: {
@@ -39,6 +45,9 @@ const styles = {
         }
     }
 }
+
+const ActiveRow = ({classes, children, ...props}) => <TableRow className={classes.activeRow} {...props}>{children}</TableRow>
+const StyledActiveRow = injectSheet(styles)(ActiveRow)
 
 const Cell = ({classes, children}) => <TableCell className={classes.tableCell}>{children}</TableCell>
 const StyledTableCell = injectSheet(styles)(Cell)
@@ -71,14 +80,14 @@ class DataTable extends Component {
       render() {
         const {page, rowsPerPage} = this.state;
         const columnHeaders = [{title: 'ID', name: 'id'}, {title:'Repo Title', name: 'name'}, {title: 'Owner', name: 'owner'}, {title: 'Stars', name: 'stargazers_count'}, {title: 'Created at', name: 'created_at'}]
-        const data = this.props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(item => (
-            <TableRow key={item.id}>
+        const data = this.props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
+            <StyledActiveRow key={index} data-index={page === 0 ? index : page * rowsPerPage + index} onClick={this.props.triggerPopup}>
                 <StyledTableCell>{item.id}</StyledTableCell>
                 <StyledTableCell>{item.name}</StyledTableCell>
                 <StyledTableCell>{item.owner.login}</StyledTableCell>
                 <StyledTableCell>{item.stargazers_count}</StyledTableCell>
                 <StyledTableCell>{item.created_at.slice(0,10)}</StyledTableCell>
-            </TableRow>
+            </StyledActiveRow>
         )
         )
 
