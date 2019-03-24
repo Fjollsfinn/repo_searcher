@@ -12,10 +12,7 @@ Consider:
 - Do not fire requests as long as the user is typing. Typically you should throttle requests so that when the user types quickly, we fire one request with the latest input value instead of many
 The table should be of the following structure:
 
- __ __________ __________ _____ __________
-|ID|Repo Title|Owner     |Stars|Created at|
-|1 |react     |fjollsfinn|10000|2019-03-15|
- -----------------------------------------
+![Table](./src/table.png)
 
  The table should show maximum 5 rows at once.
  Apart from that, please implement the following (locally, not using API queries):
