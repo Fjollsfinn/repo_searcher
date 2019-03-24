@@ -14,7 +14,9 @@ const styles = {
         width: '40rem',
         height: 'auto',
         borderRadius: '.5rem',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        zIndex: '2',
+        boxShadow: '0 .5rem 1rem rgba(0, 0, 0, 1)'
     },
     button: {
         marginTop: '2rem',

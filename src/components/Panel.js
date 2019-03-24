@@ -5,6 +5,7 @@ import DataTable from './DataTable';
 import debounce from 'lodash.debounce';
 
 import Popup from './Popup';
+import Overlay from './Overlay';
 
 class Panel extends Component {
     constructor() {
@@ -148,7 +149,9 @@ class Panel extends Component {
                         state={this.state}
                     />
                 </Grid>
-                {this.state.isPopupOpen && <Popup triggerPopup={this.triggerPopup} selectedItem={this.state.selectedItem} data={this.state.fetchedData} />}
+                {this.state.isPopupOpen && <Popup triggerPopup={this.triggerPopup} selectedItem={this.state.selectedItem} data={this.state.fetchedData} />
+                }
+                {this.state.isPopupOpen && <Overlay />}
             </Grid>
         )
     }

@@ -22,6 +22,10 @@ The table should be of the following structure:
  - A persistence mechanism (e.g. using localStorage) - so it remembers last search and settings after page refresh
 Feel free to use your favorite UI components library if you like.
 
+`Extra assumption from me:`
+- You can click on header to navigate to main github page
+- You can click on any rows to open a popup with clicked item title, a description and button which navigates to github repozitory
+
 `specification`: https://hackmd.io/s/r1lLqA8S4
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
