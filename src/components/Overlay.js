@@ -9,8 +9,8 @@ const styles = {
         left: 0, 
         position: 'absolute',
         backgroundColor: 'rgba(0, 0, 0, .55)', 
-        width: '100vw', 
-        height: '100vh'
+        width: '100%', 
+        height: '100%'
     }
 }
 

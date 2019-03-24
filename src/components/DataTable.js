@@ -36,12 +36,12 @@ const styles = {
     },
     '@media (max-width: 1024px)': {
         tableCell: {
-            width: '10rem'
+            width: '7rem'
         }
     },
     '@media (max-width: 640px)': {
         tableCell: {
-            width: '8rem'
+            width: '5rem'
         }
     }
 }

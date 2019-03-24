@@ -16,7 +16,8 @@ const styles = {
         borderRadius: '.5rem',
         flexDirection: 'column',
         zIndex: '2',
-        boxShadow: '0 .5rem 1rem rgba(0, 0, 0, 1)'
+        boxShadow: '0 .5rem 1rem rgba(0, 0, 0, 1)',
+        padding: '1rem'
     },
     button: {
         marginTop: '2rem',
@@ -53,16 +54,14 @@ const StyledButton = injectSheet(styles)(Button)
 const PopupComponent = ({classes, ...props}) => (
     <Grid container className={classes.popup}>
         <Grid item style={{marginLeft: 'auto'}}>
-            <IconButton onClick={props.triggerPopup}>
-                <Clear />
-            </IconButton>
+            <Clear style={{cursor: 'pointer', color: '#282c34'}} onClick={props.triggerPopup}/>
         </Grid>
         <Grid container direction='column' alignItems='center' justify='center'>
             <Grid item>
-                <h1 >{props.data[props.selectedItem].name}</h1>
+                <h1 style={{color: '#282c34'}}>{props.data[props.selectedItem].name}</h1>
             </Grid>
             <Grid item>
-                <p>{props.data[props.selectedItem].description}</p>
+                <p style={{color: '#282c34'}} >{props.data[props.selectedItem].description}</p>
             </Grid>
             <Grid item>
                 <StyledButton {...props}>Go to repo →</StyledButton>
