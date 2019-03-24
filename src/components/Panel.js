@@ -122,7 +122,6 @@ class Panel extends Component {
 
     triggerPopup(e) {
         const clickedItemIndex = e.target.parentNode.dataset.index
-        console.log(this.state.fetchedData[clickedItemIndex])
         this.setState(prevState => {
             return {
                 isPopupOpen: !prevState.isPopupOpen,

@@ -29,17 +29,14 @@ const StyledDiv = injectSheet(styles)(Div)
 class TablePagination extends Component {
     handleFirstPageButtonClick = event => {
       this.props.onChangePage(event, 0);
-      console.log(this.props.rowsPerPage, this.props.page);
     };
   
     handleBackButtonClick = event => {
       this.props.onChangePage(event, this.props.page - 1);
-      console.log(this.props.rowsPerPage, this.props.page);
     };
   
     handleNextButtonClick = event => {
       this.props.onChangePage(event, this.props.page + 1);
-      console.log(this.props.rowsPerPage, this.props.page);
     };
   
     handleLastPageButtonClick = event => {
@@ -47,7 +44,6 @@ class TablePagination extends Component {
         event,
         Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
       );
-      console.log(this.props.rowsPerPage, this.props.page);
     };
   
     render() {
