@@ -13,6 +13,11 @@ const styles = {
         '&:hover': {
             transform: 'skewY(3deg) skewX(15deg) scale(1.1)',
         }
+    },
+    '@media (max-width: 640px)': {
+        header: {
+            fontSize: '4rem'
+        }
     }
 }
 const HeaderComponent = ({classes, children}) => (<div className={classes.header}><a style={{textDecoration: 'none', color: 'inherit'}}href='https://github.com' target='_blank'>{children}</a></div>)

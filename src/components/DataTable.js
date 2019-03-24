@@ -27,6 +27,16 @@ const styles = {
     arrowDown: {
         color: 'white',
         zIndex: -1
+    },
+    '@media (max-width: 1024px)': {
+        tableCell: {
+            width: '10rem'
+        }
+    },
+    '@media (max-width: 640px)': {
+        tableCell: {
+            width: '8rem'
+        }
     }
 }
 
