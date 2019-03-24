@@ -17,7 +17,7 @@ const styles = {
         flexDirection: 'column',
         zIndex: '2',
         boxShadow: '0 .5rem 1rem rgba(0, 0, 0, 1)',
-        padding: '1rem'
+        padding: '1rem',
     },
     button: {
         marginTop: '2rem',
@@ -33,6 +33,8 @@ const styles = {
         outline: 'none !important',
         border: 'none',
         marginBottom: '1.5rem',
+        transform: 'translateZ(0) scale(1.0, 1.0)',
+        backfaceVisibility: 'hidden',
         '&:hover': {
             backgroundColor: '#282c34',
             color: 'white',
