@@ -6,7 +6,7 @@ import Clear from '@material-ui/icons/Clear';
 
 const styles = {
     popup: {
-        position: 'absolute',
+        position: 'fixed',
         top: '50%',
         left: '50%',
         transform: 'translateX(-50%) translateY(-50%)',
@@ -60,10 +60,10 @@ const PopupComponent = ({classes, ...props}) => (
         </Grid>
         <Grid container direction='column' alignItems='center' justify='center'>
             <Grid item>
-                <h1 style={{color: '#282c34'}}>{props.data[props.selectedItem].name}</h1>
+                <p style={{color: '#282c34', fontSize: '2rem', fontWeight: 700}}>{props.data[props.selectedItem].name}</p>
             </Grid>
             <Grid item>
-                <p style={{color: '#282c34'}} >{props.data[props.selectedItem].description}</p>
+                <p style={{color: '#282c34', fontSize: '1.5rem'}} >{props.data[props.selectedItem].description}</p>
             </Grid>
             <Grid item>
                 <StyledButton {...props}>Go to repo →</StyledButton>

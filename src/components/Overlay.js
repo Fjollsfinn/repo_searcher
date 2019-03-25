@@ -7,21 +7,21 @@ const styles = {
         zIndex: 1, 
         top: 0, 
         left: 0, 
-        position: 'absolute',
+        position: 'fixed',
         backgroundColor: 'rgba(0, 0, 0, .55)', 
         width: '100%', 
-        height: '100%'
+        height: '100%',
     }
 }
 
-const OverlayComponent = ({classes}) => (
-    <div className={classes.overlay}></div>
+const OverlayComponent = ({classes, ...props}) => (
+    <div className={classes.overlay} {...props}></div>
 )
 const StyledOverlayComponent = injectSheet(styles)(OverlayComponent);
 
-function Overlay ()  {
+function Overlay (props)  {
     return (
-        <StyledOverlayComponent/>
+        <StyledOverlayComponent onClick={props.triggerPopup}/>
     )
 }
 

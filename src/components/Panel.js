@@ -151,7 +151,7 @@ class Panel extends Component {
                 </Grid>
                 {this.state.isPopupOpen && <Popup triggerPopup={this.triggerPopup} selectedItem={this.state.selectedItem} data={this.state.fetchedData} />
                 }
-                {this.state.isPopupOpen && <Overlay />}
+                {this.state.isPopupOpen && <Overlay triggerPopup={this.triggerPopup} />}
             </Grid>
         )
     }
