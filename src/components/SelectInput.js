@@ -1,29 +1,25 @@
 import React from 'react';
-import injectSheet from 'react-jss';
+import PropTypes from 'prop-types';
 
-const styles = {
-    select: {
-    },
-    option: {
-        
-    }
+function SelectInput({ onChangeRowsPerPage, rowsPerPage, options, ...props }) {
+    return (
+    <select type="select" onChange={onChangeRowsPerPage} value={rowsPerPage} {...props} >
+        {options && options.map(option => (
+            <option key={`select-input-option-${option}`} value={option}>{option}</option>
+        ))}
+    </select>
+    )
 }
 
-const SelectComponent = ({classes, ...props}) => (
-    <select type="select" className={classes.input} {...props} >
-        <option value={5}>5</option>
-        <option value={10}>10</option>
-        <option value={15}>15</option>
-    </select>
+SelectInput.propTypes = {
+    onChangeRowsPerPage: PropTypes.func.isRequired,
+    rowsPerPage: PropTypes.number,
+    options: PropTypes.arrayOf(PropTypes.number),
+}
 
-)
-
-const StyledSelectComponent = injectSheet(styles)(SelectComponent);
-
-function SelectInput({ onChangeRowsPerPage, rowsPerPage }) {
-    return (
-        <StyledSelectComponent onChange={onChangeRowsPerPage} value={rowsPerPage}/>
-    )
+SelectInput.defaultProps = {
+    rowsPerPage: 5,
+    options: [5, 10, 15],
 }
 
 export default SelectInput;
