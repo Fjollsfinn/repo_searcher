@@ -9,20 +9,20 @@ const styles = {
         paddingLeft: '1rem',
         border: '.3rem white solid',
         backgroundColor: '#282c34',
-        color: 'white'
-    }
-}
+        color: 'white',
+    },
+};
 
-const inputComponent = ({classes, ...props}) => (
-    <input type="text" className={classes.input} placeholder="Enter repozitory name . . ." name="searchInput" {...props}/>
-)
+const inputComponent = ({ classes, ...props }) => (
+  <input type="text" className={classes.input} placeholder="Enter repozitory name . . ." name="searchInput" {...props} />
+);
 
 const StyledInputComponent = injectSheet(styles)(inputComponent);
 
 function TextInput(props) {
     return (
-        <StyledInputComponent onChange={props.handleChangeInput} value={props.value}/>
-    )
+      <StyledInputComponent onChange={props.handleChangeInput} value={props.value} />
+    );
 }
 
 export default TextInput;

@@ -4,16 +4,16 @@ import injectSheet from 'react-jss';
 
 const styles = {
     loader: {
-        color: 'white'
-    }
-}
+        color: 'white',
+    },
+};
 
-const Progress = ({classes}) => <CircularProgress className={classes.loader}/>
+const Progress = ({ classes }) => <CircularProgress className={classes.loader} />;
 
-const StyledProgress = injectSheet(styles)(Progress)
+const StyledProgress = injectSheet(styles)(Progress);
 
 function Loader() {
-    return <StyledProgress />
+    return <StyledProgress />;
 }
 
 export default Loader;

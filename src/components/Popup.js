@@ -39,44 +39,44 @@ const styles = {
             backgroundColor: '#282c34',
             color: 'white',
             boxShadow: '0 1rem 2rem rgba(0, 0, 0, .4)',
-            transform: 'translateY(-2px)'
+            transform: 'translateY(-2px)',
         },
         '&:active': {
             boxShadow: '0 .5rem 1rem rgba(0, 0, 0, .4)',
-            transform: 'translateY(0)'
-        }
-    }
-}
+            transform: 'translateY(0)',
+        },
+    },
+};
 
-const Button = ({classes, children, ...props}) => (
-    <a className={classes.button} href={props.data[props.selectedItem].html_url} target='_blank'>{children}</a>
-)
-const StyledButton = injectSheet(styles)(Button)
+const Button = ({ classes, children, ...props }) => (
+  <a className={classes.button} href={props.data[props.selectedItem].html_url} target="_blank">{children}</a>
+);
+const StyledButton = injectSheet(styles)(Button);
 
-const PopupComponent = ({classes, ...props}) => (
-    <Grid container className={classes.popup}>
-        <Grid item style={{marginLeft: 'auto'}}>
-            <Clear style={{cursor: 'pointer', color: '#282c34'}} onClick={props.triggerPopup}/>
-        </Grid>
-        <Grid container direction='column' alignItems='center' justify='center'>
-            <Grid item>
-                <p style={{color: '#282c34', fontSize: '2rem', fontWeight: 700}}>{props.data[props.selectedItem].name}</p>
-            </Grid>
-            <Grid item>
-                <p style={{color: '#282c34', fontSize: '1.5rem'}} >{props.data[props.selectedItem].description}</p>
-            </Grid>
-            <Grid item>
-                <StyledButton {...props}>Go to repo →</StyledButton>
-            </Grid>
-        </Grid>
+const PopupComponent = ({ classes, ...props }) => (
+  <Grid container className={classes.popup}>
+    <Grid item style={{ marginLeft: 'auto' }}>
+      <Clear style={{ cursor: 'pointer', color: '#282c34' }} onClick={props.triggerPopup} />
     </Grid>
-)
+    <Grid container direction="column" alignItems="center" justify="center">
+      <Grid item>
+        <p style={{ color: '#282c34', fontSize: '2rem', fontWeight: 700 }}>{props.data[props.selectedItem].name}</p>
+      </Grid>
+      <Grid item>
+        <p style={{ color: '#282c34', fontSize: '1.5rem' }}>{props.data[props.selectedItem].description}</p>
+      </Grid>
+      <Grid item>
+        <StyledButton {...props}>Go to repo →</StyledButton>
+      </Grid>
+    </Grid>
+  </Grid>
+);
 const StyledPopupComponent = injectSheet(styles)(PopupComponent);
 
-function Popup (props)  {
+function Popup(props) {
     return (
-        <StyledPopupComponent triggerPopup={props.triggerPopup} data={props.data} selectedItem={props.selectedItem}/>
-    )
+      <StyledPopupComponent triggerPopup={props.triggerPopup} data={props.data} selectedItem={props.selectedItem} />
+    );
 }
 
 export default Popup;
