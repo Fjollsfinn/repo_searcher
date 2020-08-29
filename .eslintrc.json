@@ -1,25 +1,32 @@
 {
-    "env": {
-      "browser": true,
-      "node": true,
-      "jest": true
-    },
-    "extends": "airbnb",
-    "parser": "babel-eslint",
-    "plugins": [
-      "react",
-      "react-hooks"
-    ],
-    "settings": {
-      "import/resolver": {
-        "babel-module": {}
+  "env": {
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2019
+  },
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "plugins": [
+    "react",
+    "react-hooks"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "linebreak-style": ["off", "unix"],
+    "no-console": "warn",
+    "no-shadow": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js", "*.spec.js"],
+      "env": {
+        "jest": true
+      },
+      "rules": {
+        "react/jsx-filename-extension": "off"
       }
-    },
-    "rules": {
-      "template-curly-spacing" : "off",
-      "indent": "off",
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "error"
     }
-  }
-  
+  ]
+}

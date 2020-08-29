@@ -2,28 +2,28 @@ import React from 'react';
 import injectSheet from 'react-jss';
 
 const styles = {
+  header: {
+    fontSize: '6rem',
+    paddingTop: '3rem',
+    paddingBottom: '6rem',
+    color: 'white',
+    textAlign: 'center',
+  },
+  link: {
+    cursor: 'pointer',
+    textDecoration: 'none',
+    color: 'inherit',
+    transition: 'transform .3s ease-out',
+    display: 'inline-block',
+    '&:hover': {
+      transform: 'skewY(3deg) skewX(15deg) scale(1.1)',
+    },
+  },
+  '@media (max-width: 640px)': {
     header: {
-        fontSize: '6rem',
-        paddingTop: '3rem',
-        paddingBottom: '6rem',
-        color: 'white',
-        textAlign: 'center',
+      fontSize: '4rem',
     },
-    link: {
-        cursor: 'pointer',
-        textDecoration: 'none',
-        color: 'inherit',
-        transition: 'transform .3s ease-out',
-        display: 'inline-block',
-        '&:hover': {
-            transform: 'skewY(3deg) skewX(15deg) scale(1.1)',
-        },
-    },
-    '@media (max-width: 640px)': {
-        header: {
-            fontSize: '4rem',
-        },
-    },
+  },
 
 };
 
@@ -34,9 +34,9 @@ const HeaderComponent = ({ classes, children }) => (<div className={classes.head
 const StyledHeaderComponent = injectSheet(styles)(HeaderComponent);
 
 function Header() {
-    return (
-      <StyledHeaderComponent>Github Repozitory Searcher</StyledHeaderComponent>
-    );
+  return (
+    <StyledHeaderComponent>Github Repozitory Searcher</StyledHeaderComponent>
+  );
 }
 
 export default Header;

@@ -9,14 +9,14 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import SelectInput from './SelectInput';
 
 const styles = {
-    iconButton: {
-        color: 'white',
-    },
-    div: {
-        color: 'white',
-        fontSize: '1.2rem',
-        marginRight: '1rem',
-    },
+  iconButton: {
+    color: 'white',
+  },
+  div: {
+    color: 'white',
+    fontSize: '1.2rem',
+    marginRight: '1rem',
+  },
 };
 
 const Button = ({ classes, children, ...props }) => <IconButton className={classes.iconButton} {...props}>{children}</IconButton>;
@@ -90,6 +90,6 @@ class TablePagination extends Component {
         </Grid>
       );
     }
-  }
+}
 
-  export default TablePagination;
+export default TablePagination;

@@ -15,35 +15,35 @@ import Loader from './Loader';
 import TablePagination from './TablePagination';
 
 const styles = {
+  tableCell: {
+    color: 'white',
+    fontSize: '1.6rem',
+    width: '13rem',
+  },
+  arrowUp: {
+    color: 'white',
+    zIndex: -1,
+  },
+  arrowDown: {
+    color: 'white',
+    zIndex: -1,
+  },
+  activeRow: {
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: '#434956',
+    },
+  },
+  '@media (max-width: 1024px)': {
     tableCell: {
-        color: 'white',
-        fontSize: '1.6rem',
-        width: '13rem',
+      width: '7rem',
     },
-    arrowUp: {
-        color: 'white',
-        zIndex: -1,
+  },
+  '@media (max-width: 640px)': {
+    tableCell: {
+      width: '5rem',
     },
-    arrowDown: {
-        color: 'white',
-        zIndex: -1,
-    },
-    activeRow: {
-        cursor: 'pointer',
-        '&:hover': {
-            backgroundColor: '#434956',
-        },
-    },
-    '@media (max-width: 1024px)': {
-        tableCell: {
-            width: '7rem',
-        },
-    },
-    '@media (max-width: 640px)': {
-        tableCell: {
-            width: '5rem',
-        },
-    },
+  },
 };
 
 const ActiveRow = ({ classes, children, ...props }) => <TableRow className={classes.activeRow} {...props}>{children}</TableRow>;
@@ -59,72 +59,72 @@ const ArrowDown = ({ classes, ...props }) => <ArrowDownward className={classes.a
 const WhiteArrowDown = injectSheet(styles)(ArrowDown);
 
 class DataTable extends Component {
-    constructor() {
-        super();
-        this.state = {
-            page: 0,
-            rowsPerPage: 5,
-        };
-        this.handleChangePage = this.handleChangePage.bind(this);
-        this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
-    }
+  constructor() {
+    super();
+    this.state = {
+      page: 0,
+      rowsPerPage: 5,
+    };
+    this.handleChangePage = this.handleChangePage.bind(this);
+    this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
+  }
 
-    handleChangePage(event, page) {
-        this.setState({ page });
-    }
+  handleChangePage(event, page) {
+    this.setState({ page });
+  }
 
-    handleChangeRowsPerPage(event) {
-        this.setState({ page: 0, rowsPerPage: +event.target.value });
-    }
+  handleChangeRowsPerPage(event) {
+    this.setState({ page: 0, rowsPerPage: +event.target.value });
+  }
 
-      render() {
-        const { page, rowsPerPage } = this.state;
-        const columnHeaders = [{ title: 'ID', name: 'id' }, { title: 'Repo Title', name: 'name' }, { title: 'Owner', name: 'owner' }, { title: 'Stars', name: 'stargazers_count' }, { title: 'Created at', name: 'created_at' }];
-        const data = this.props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
-          <StyledActiveRow key={index} data-index={page === 0 ? index : page * rowsPerPage + index} onClick={this.props.triggerPopup}>
-            <StyledTableCell>{item.id}</StyledTableCell>
-            <StyledTableCell>{item.name}</StyledTableCell>
-            <StyledTableCell>{item.owner.login}</StyledTableCell>
-            <StyledTableCell>{item.stargazers_count}</StyledTableCell>
-            <StyledTableCell>{item.created_at.slice(0, 10)}</StyledTableCell>
-          </StyledActiveRow>
-        ));
+  render() {
+    const { page, rowsPerPage } = this.state;
+    const columnHeaders = [{ title: 'ID', name: 'id' }, { title: 'Repo Title', name: 'name' }, { title: 'Owner', name: 'owner' }, { title: 'Stars', name: 'stargazers_count' }, { title: 'Created at', name: 'created_at' }];
+    const data = this.props.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => (
+      <StyledActiveRow key={index} data-index={page === 0 ? index : page * rowsPerPage + index} onClick={this.props.triggerPopup}>
+        <StyledTableCell>{item.id}</StyledTableCell>
+        <StyledTableCell>{item.name}</StyledTableCell>
+        <StyledTableCell>{item.owner.login}</StyledTableCell>
+        <StyledTableCell>{item.stargazers_count}</StyledTableCell>
+        <StyledTableCell>{item.created_at.slice(0, 10)}</StyledTableCell>
+      </StyledActiveRow>
+    ));
 
-        return (
-          <div>
-            <Grid container direction="column" alignItems="center">
+    return (
+      <div>
+        <Grid container direction="column" alignItems="center">
+          <Table>
+            <TableHead>
+              <TableRow>
+                {columnHeaders.map((header) => (
+                  <StyledTableCell key={header.name}>
+                    {header.title}
+                    <IconButton onClick={this.props.handleSort} data-sort={header.name}>{this.props.state[header.name] === 'asc' ? <WhiteArrowUp /> : <WhiteArrowDown />}</IconButton>
+                  </StyledTableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+          </Table>
+          { this.props.isLoading
+            ? <Grid item style={{ marginTop: '2rem' }}><Loader /></Grid>
+            : (
               <Table>
-                <TableHead>
-                  <TableRow>
-                    {columnHeaders.map((header) => (
-                      <StyledTableCell key={header.name}>
-                        {header.title}
-                        <IconButton onClick={this.props.handleSort} data-sort={header.name}>{this.props.state[header.name] === 'asc' ? <WhiteArrowUp /> : <WhiteArrowDown />}</IconButton>
-                      </StyledTableCell>
-                                ))}
-                  </TableRow>
-                </TableHead>
+                <TableBody>
+                  {data}
+                </TableBody>
               </Table>
-              { this.props.isLoading
-                    ? <Grid item style={{ marginTop: '2rem' }}><Loader /></Grid>
-                    : (
-                      <Table>
-                        <TableBody>
-                          {data}
-                        </TableBody>
-                      </Table>
-)}
-            </Grid>
-            <TablePagination
-              onChangePage={this.handleChangePage}
-              onChangeRowsPerPage={this.handleChangeRowsPerPage}
-              rowsPerPage={this.state.rowsPerPage}
-              page={this.state.page}
-              count={30}
-            />
-          </div>
-        );
-    }
+            )}
+        </Grid>
+        <TablePagination
+          onChangePage={this.handleChangePage}
+          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          rowsPerPage={this.state.rowsPerPage}
+          page={this.state.page}
+          count={30}
+        />
+      </div>
+    );
+  }
 }
 
 export default DataTable;
