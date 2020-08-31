@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function SelectInput({
-  onChangeRowsPerPage, rowsPerPage, options, ...props
+  onChangeRowsPerPage, rowsPerPage, options, ...selectProps
 }) {
   return (
-    <select type="select" onChange={onChangeRowsPerPage} value={rowsPerPage} {...props}>
+    <select type="select" onChange={onChangeRowsPerPage} value={rowsPerPage} {...selectProps}>
       {options && options.map((option) => (
         <option key={`select-input-option-${option}`} value={option}>{option}</option>
       ))}

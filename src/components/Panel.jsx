@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import debounce from 'lodash.debounce';
 import TextInput from './TextInput';
 import DataTable from './DataTable';
-
 import Popup from './Popup';
 import Overlay from './Overlay';
 
@@ -23,13 +22,49 @@ class Panel extends Component {
       selectedItem: null,
     };
     this.handleChangeInput = this.handleChangeInput.bind(this);
-    this.getData = debounce(this.getData, 500);
+    this.fetchData = debounce(this.fetchData, 500);
     this.handleSort = this.handleSort.bind(this);
     this.triggerPopup = this.triggerPopup.bind(this);
   }
 
   componentDidMount() {
-    this.getData('tetris');
+    const cachedQuery = JSON.parse(localStorage.getItem('cachedQuery'));
+    const cachedData = JSON.parse(localStorage.getItem('cachedData'));
+    if (cachedQuery && cachedData && cachedData.length) {
+      this.setState({
+        fetchedData: cachedData,
+        searchInput: cachedQuery,
+        isLoading: false,
+      });
+    } else {
+      this.fetchData('tetris');
+    }
+  }
+
+  fetchData(topic) {
+    const { searchInput } = this.state;
+    if (topic) {
+      fetch(`https://api.github.com/search/repositories?q=${topic}`)
+        .then((blob) => blob.json())
+        .then((data) => {
+          this.setState({
+            fetchedData: data.items,
+            isLoading: false,
+          }, () => {
+            localStorage.setItem('cachedQuery', JSON.stringify(searchInput));
+            localStorage.setItem('cachedData', JSON.stringify(data && data.items));
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      this.setState({
+        isLoading: false,
+        fetchedData: [],
+        searchInput: '',
+      });
+    }
   }
 
   handleChangeInput(e) {
@@ -38,42 +73,20 @@ class Panel extends Component {
     this.setState({
       [name]: value,
       isLoading: true,
-    }, function () {
-      if (this.state.searchInput) {
-        this.getData(this.state.searchInput);
-      }
-    });
+    }, this.fetchData(value));
   }
 
-  getData(topic) {
-    const cachedQuery = JSON.parse(localStorage.getItem('cachedQuery'));
-    const cachedData = JSON.parse(localStorage.getItem('cachedData'));
-    if (cachedData && cachedQuery && topic !== cachedQuery && topic === 'tetris') {
-      this.setState({
-        fetchedData: cachedData,
-        searchInput: cachedQuery,
-        isLoading: false,
-      });
-      return;
-    }
-    fetch(`https://api.github.com/search/repositories?q=${topic}`)
-      .then((blob) => blob.json())
-      .then((data) => {
-        this.setState({
-          fetchedData: data.items,
-          isLoading: false,
-        }, function () {
-          localStorage.setItem('cachedQuery', JSON.stringify(this.state.searchInput));
-          localStorage.setItem('cachedData', JSON.stringify(this.state.fetchedData));
-        });
-      });
-  }
-
+  // TODO refactor this weird function.
   handleSort(e) {
-    let sortingParam; let order; let
-      sortedData;
+    let sortingParam; let order;
     sortingParam = e.target.dataset.sort;
-    sortingParam === 'id' || sortingParam === 'name' || sortingParam === 'owner' || sortingParam === 'stargazers_count' || sortingParam === 'created_at' ? sortingParam = sortingParam : sortingParam = e.target.parentNode.dataset.sort;
+    sortingParam === 'id'
+    || sortingParam === 'name'
+    || sortingParam === 'owner'
+    || sortingParam === 'stargazers_count'
+    || sortingParam === 'created_at'
+      ? sortingParam = sortingParam
+      : sortingParam = e.target.parentNode.dataset.sort;
     this.state[sortingParam] === 'asc' ? order = 'desc' : order = 'asc';
 
     function compare(item1, item2) {
@@ -113,7 +126,7 @@ class Panel extends Component {
       return item2[sortingParam] - item1[sortingParam];
     }
 
-    sortedData = this.state.fetchedData.sort(compare);
+    const sortedData = this.state.fetchedData.sort(compare);
 
     this.setState({
       [sortingParam]: order,
@@ -130,25 +143,30 @@ class Panel extends Component {
   }
 
   render() {
+    const {
+      isPopupOpen, selectedItem, isLoading, fetchedData, searchInput,
+    } = this.state;
     return (
       <Grid container direction="column" alignItems="center">
         <Grid item>
           <TextInput
-            handleChangeInput={this.handleChangeInput}
-            value={this.state.searchInput}
+            onChangeInput={this.handleChangeInput}
+            value={searchInput}
           />
         </Grid>
         <Grid item style={{ marginTop: '2rem' }}>
           <DataTable
-            data={this.state.fetchedData}
-            isLoading={this.state.isLoading}
+            data={fetchedData}
+            isLoading={isLoading}
             handleSort={this.handleSort}
             triggerPopup={this.triggerPopup}
-            state={this.state}
+            panelState={this.state}
           />
         </Grid>
-        {this.state.isPopupOpen && <Popup triggerPopup={this.triggerPopup} selectedItem={this.state.selectedItem} data={this.state.fetchedData} />}
-        {this.state.isPopupOpen && <Overlay triggerPopup={this.triggerPopup} />}
+        {isPopupOpen && (
+          <Popup triggerPopup={this.triggerPopup} data={fetchedData[selectedItem]} />
+        )}
+        {isPopupOpen && <Overlay triggerPopup={this.triggerPopup} />}
       </Grid>
     );
   }
