@@ -10,6 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { Typography } from '@material-ui/core';
+import PageviewIcon from '@material-ui/icons/Pageview';
+import clsx from 'clsx';
 import TableCell from './TableCell';
 import TablePagination from './TablePagination';
 
@@ -17,9 +20,6 @@ const styles = {
   sortArrow: {
     color: '#ffffff',
     zIndex: -1,
-  },
-  loader: {
-    color: '#ffffff',
   },
   activeRow: {
     cursor: 'pointer',
@@ -29,6 +29,15 @@ const styles = {
   },
   loaderWrapper: {
     marginTop: '2rem',
+  },
+  noDataInfoWrapper: {
+    padding: '2rem',
+  },
+  white: {
+    color: '#ffffff',
+  },
+  noItemsIcon: {
+    fontSize: 64,
   },
 };
 
@@ -99,13 +108,18 @@ class DataTable extends Component {
                 item
                 className={classes.loaderWrapper}
               >
-                <CircularProgress className={classes.loader} />
+                <CircularProgress className={classes.white} />
               </Grid>
             )
             : (
               <Table>
                 <TableBody>
-                  {tableData}
+                  {data && data.length ? tableData : (
+                    <Grid className={classes.noDataInfoWrapper} container direction="column" alignItems="center">
+                      <PageviewIcon className={clsx(classes.white, classes.noItemsIcon)} />
+                      <Typography className={classes.white} variant="h4">No repository found.</Typography>
+                    </Grid>
+                  )}
                 </TableBody>
               </Table>
             )}
