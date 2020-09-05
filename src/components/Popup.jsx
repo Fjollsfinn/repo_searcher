@@ -4,6 +4,7 @@ import injectSheet from 'react-jss';
 import Grid from '@material-ui/core/Grid';
 import Clear from '@material-ui/icons/Clear';
 import Typography from '@material-ui/core/Typography';
+import cyan from '@material-ui/core/colors/cyan';
 
 const styles = {
   popup: {
@@ -48,7 +49,7 @@ const styles = {
     transform: 'translateZ(0) scale(1.0, 1.0)',
     backfaceVisibility: 'hidden',
     '&:hover': {
-      backgroundColor: '#282c34',
+      backgroundColor: cyan[900],
       color: 'white',
       boxShadow: '0 1rem 2rem rgba(0, 0, 0, .4)',
       transform: 'translateY(-2px)',
@@ -60,6 +61,9 @@ const styles = {
   },
   buttonText: {
     color: 'inherit',
+  },
+  title: {
+    color: cyan[900],
   },
 };
 
@@ -74,7 +78,7 @@ function Popup({
       </Grid>
       <Grid container direction="column" alignItems="center" justify="center">
         <Grid item>
-          <Typography variant="h3">{name}</Typography>
+          <Typography className={classes.title} variant="h3">{name}</Typography>
         </Grid>
         <Grid item>
           <Typography variant="h5" className={classes.popupDescription}>{description}</Typography>
@@ -86,7 +90,7 @@ function Popup({
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Typography className={classes.buttonText} variant="h4">
+            <Typography className={classes.buttonText} variant="h5">
               Go to repo →
             </Typography>
           </a>

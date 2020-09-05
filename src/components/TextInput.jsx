@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import cyan from '@material-ui/core/colors/cyan';
 
 const styles = {
   input: {
@@ -9,8 +10,11 @@ const styles = {
     width: '25rem',
     paddingLeft: '1rem',
     border: '.3rem white solid',
-    backgroundColor: '#282c34',
-    color: 'white',
+    backgroundColor: cyan[900],
+    color: '#fff',
+    '&::placeholder': {
+      color: '#fff',
+    },
   },
 };
 

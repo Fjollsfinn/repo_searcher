@@ -6,6 +6,14 @@ import DataTable from './DataTable';
 import Popup from './Popup';
 import Overlay from './Overlay';
 
+const initialSorting = {
+  id: 'asc',
+  name: 'asc',
+  owner: 'asc',
+  stargazers_count: 'asc',
+  created_at: 'asc',
+};
+
 class Panel extends Component {
   constructor() {
     super();
@@ -13,11 +21,10 @@ class Panel extends Component {
       searchInput: '',
       fetchedData: [],
       isLoading: true,
-      id: 'asc',
-      name: 'asc',
-      owner: 'asc',
-      stargazers_count: 'asc',
-      created_at: 'asc',
+      sort: {
+        ...initialSorting,
+      },
+      currentSortingParam: '',
       isPopupOpen: false,
       selectedItem: null,
     };
@@ -76,61 +83,46 @@ class Panel extends Component {
     }, this.fetchData(value));
   }
 
-  // TODO refactor this weird function.
   handleSort(e) {
-    let sortingParam; let order;
-    sortingParam = e.target.dataset.sort;
-    sortingParam === 'id'
-    || sortingParam === 'name'
-    || sortingParam === 'owner'
-    || sortingParam === 'stargazers_count'
-    || sortingParam === 'created_at'
-      ? sortingParam = sortingParam
-      : sortingParam = e.target.parentNode.dataset.sort;
-    this.state[sortingParam] === 'asc' ? order = 'desc' : order = 'asc';
+    const { fetchedData, sort } = this.state;
+    const sortingParam = e.target.value || e.target.parentNode.value;
+    const order = sort[sortingParam];
 
-    function compare(item1, item2) {
-      if (order === 'asc') {
-        if (sortingParam === 'name') {
-          if (item1[sortingParam] > item2[sortingParam]) {
-            return -1;
-          } if (item1[sortingParam] < item2[sortingParam]) {
-            return 1;
-          }
-        } else if (sortingParam === 'owner') {
-          if (item1[sortingParam].login > item2[sortingParam].login) {
-            return -1;
-          } if (item1[sortingParam].login < item2[sortingParam].login) {
-            return 1;
-          }
-        } else if (sortingParam === 'created_at') {
-          return item1[sortingParam].slice(0, 10).split('-').join('') - item2[sortingParam].slice(0, 10).split('-').join('');
-        }
-        return item1[sortingParam] - item2[sortingParam];
-      }
-      if (sortingParam === 'name') {
-        if (item1[sortingParam] < item2[sortingParam]) {
-          return -1;
-        } if (item1[sortingParam] > item2[sortingParam]) {
-          return 1;
-        }
-      } else if (sortingParam === 'owner') {
-        if (item1[sortingParam].login < item2[sortingParam].login) {
-          return -1;
-        } if (item1[sortingParam].login > item2[sortingParam].login) {
-          return 1;
-        }
-      } else if (sortingParam === 'created_at') {
-        return item2[sortingParam].slice(0, 10).split('-').join('') - item1[sortingParam].slice(0, 10).split('-').join('');
-      }
-      return item2[sortingParam] - item1[sortingParam];
+    function getSortingDecision(firstItem, secondItem) {
+      return firstItem > secondItem ? -1 : 1;
     }
 
-    const sortedData = this.state.fetchedData.sort(compare);
+    function compare(prevItem, nextItem) {
+      const prev = prevItem[sortingParam];
+      const next = nextItem[sortingParam];
+      if (order === 'asc') {
+        if (sortingParam === 'name') {
+          return getSortingDecision(prev, next);
+        } if (sortingParam === 'owner') {
+          return getSortingDecision(prev.login, next.login);
+        } if (sortingParam === 'created_at') {
+          return new Date(prev) - new Date(next);
+        }
+        return prev - next;
+      }
+      if (sortingParam === 'name') {
+        return getSortingDecision(next, prev);
+      } if (sortingParam === 'owner') {
+        return getSortingDecision(next.login, prev.login);
+      } if (sortingParam === 'created_at') {
+        return new Date(next) - new Date(prev);
+      }
+      return next - prev;
+    }
+    const sortedData = fetchedData.sort(compare);
 
     this.setState({
-      [sortingParam]: order,
+      sort: {
+        ...initialSorting,
+        [sortingParam]: order === 'asc' ? 'desc' : 'asc',
+      },
       fetchedData: sortedData,
+      currentSortingParam: sortingParam,
     });
   }
 
@@ -144,7 +136,7 @@ class Panel extends Component {
 
   render() {
     const {
-      isPopupOpen, selectedItem, isLoading, fetchedData, searchInput,
+      isPopupOpen, selectedItem, isLoading, fetchedData, searchInput, sort, currentSortingParam,
     } = this.state;
     return (
       <Grid container direction="column" alignItems="center">
@@ -160,7 +152,8 @@ class Panel extends Component {
             isLoading={isLoading}
             handleSort={this.handleSort}
             triggerPopup={this.triggerPopup}
-            panelState={this.state}
+            sort={sort}
+            currentSortingParam={currentSortingParam}
           />
         </Grid>
         {isPopupOpen && (

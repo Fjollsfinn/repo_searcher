@@ -1,7 +1,7 @@
 import React from 'react';
 import injectSheet from 'react-jss';
-
 import Grid from '@material-ui/core/Grid';
+import cyan from '@material-ui/core/colors/cyan';
 import Panel from './components/Panel';
 import Header from './components/Header';
 
@@ -12,7 +12,7 @@ const styles = {
       padding: 0,
       boxSizing: 'border-box',
       fontSize: '62.5%',
-      backgroundColor: '#282c34',
+      backgroundColor: cyan[900],
     },
     body: {
       margin: 0,

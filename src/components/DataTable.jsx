@@ -13,18 +13,19 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Typography } from '@material-ui/core';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import clsx from 'clsx';
+import cyan from '@material-ui/core/colors/cyan';
 import TableCell from './TableCell';
 import TablePagination from './TablePagination';
 
 const styles = {
   sortArrow: {
-    color: '#ffffff',
+    color: '#434956',
     zIndex: -1,
   },
   activeRow: {
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: '#434956',
+      backgroundColor: cyan[800],
     },
   },
   loaderWrapper: {
@@ -41,7 +42,13 @@ const styles = {
   },
 };
 
-const columnHeaders = [{ title: 'ID', name: 'id' }, { title: 'Repo Title', name: 'name' }, { title: 'Owner', name: 'owner' }, { title: 'Stars', name: 'stargazers_count' }, { title: 'Created at', name: 'created_at' }];
+const columnHeaders = [
+  { title: 'ID', id: 'id' },
+  { title: 'Repo Title', id: 'name' },
+  { title: 'Owner', id: 'owner' },
+  { title: 'Stars', id: 'stargazers_count' },
+  { title: 'Created at', id: 'created_at' },
+];
 
 class DataTable extends Component {
   constructor() {
@@ -65,8 +72,9 @@ class DataTable extends Component {
   render() {
     const { page, rowsPerPage } = this.state;
     const {
-      classes, triggerPopup, handleSort, isLoading, panelState, data,
+      classes, triggerPopup, handleSort, isLoading, sort, data, currentSortingParam,
     } = this.props;
+
     const tableData = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .map((item, index) => (
         <TableRow
@@ -90,12 +98,20 @@ class DataTable extends Component {
             <TableHead>
               <TableRow>
                 {columnHeaders.map((header) => (
-                  <TableCell key={header.name}>
+                  <TableCell key={header.id}>
                     {header.title}
-                    <IconButton onClick={handleSort} data-sort={header.name}>
-                      {panelState[header.name] === 'asc'
-                        ? <ArrowUpward className={classes.sortArrow} />
-                        : <ArrowDownward className={classes.sortArrow} />}
+                    <IconButton onClick={handleSort} value={header.id}>
+                      {sort[header.id] === 'asc'
+                        ? (
+                          <ArrowUpward className={clsx(classes.sortArrow,
+                            { [classes.white]: currentSortingParam === header.id })}
+                          />
+                        )
+                        : (
+                          <ArrowDownward className={clsx(classes.sortArrow,
+                            { [classes.white]: currentSortingParam === header.id })}
+                          />
+                        )}
                     </IconButton>
                   </TableCell>
                 ))}
@@ -141,16 +157,18 @@ DataTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
   handleSort: PropTypes.func,
   isLoading: PropTypes.bool,
-  panelState: PropTypes.shape({}),
+  sort: PropTypes.shape({}),
   triggerPopup: PropTypes.func,
+  currentSortingParam: PropTypes.string,
 };
 
 DataTable.defaultProps = {
   data: null,
   handleSort: null,
   isLoading: null,
-  panelState: null,
+  sort: null,
   triggerPopup: null,
+  currentSortingParam: '',
 };
 
 export default injectSheet(styles)(DataTable);
